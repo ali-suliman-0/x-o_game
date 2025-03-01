@@ -1,4 +1,5 @@
 import random
+import os
 import uuid
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -153,6 +154,7 @@ app.add_middleware(
 )
 
 games = {}
+PORT = int(os.environ.get("PORT", 8000))
 @app.post('/new-game')
 async def new_game():
     id_game = random.randint(100,999)
@@ -219,3 +221,9 @@ def end_game(id_game, token):
                 return {
                     'final data': final_data
                 }
+                
+                
+                
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=PORT)
